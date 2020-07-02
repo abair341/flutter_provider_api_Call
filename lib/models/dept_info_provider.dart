@@ -9,10 +9,11 @@ class Dept_Info_Provider extends ChangeNotifier {
 
   Dept_Info dept_info = Dept_Info();
 
-  Dept_Info list;
+  //Dept_Info list;
+  List<Dept_Info> list = [];
 
-  setData(Dept_Info data) {
-    dept_info = data;
+  setData(List<Dept_Info> data) {
+    //dept_info = data;
     list = data;
     print(data);
     isLoading = false;
@@ -23,11 +24,14 @@ class Dept_Info_Provider extends ChangeNotifier {
     return dept_info;
   }
 
-  Future<Dept_Info> hitApi() async {
+  Future<List> hitApi() async {
     var response =
         await http.get("http://localhost/db_samples/db_dept_info_all.php");
+
     final Map parsed = json.decode(response.body);
-    Dept_Info dept_info_new = Dept_Info.fromJson(parsed);
+    List dept_info_new =
+        parsed['data'].map((emp) => Dept_Info.fromJson(emp)).toList();
+    // = Dept_Info.fromJson(parsed).toList();
 
     return dept_info_new;
   }
