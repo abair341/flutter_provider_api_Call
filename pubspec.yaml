@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   provider:
   http:
+  carousel_slider: ^2.2.1
 
 dev_dependencies:
   flutter_test:
