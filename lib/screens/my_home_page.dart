@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_api_flutter/all_search.dart/dept_search.dart';
+import 'package:provider_api_flutter/models/dept_info.dart';
 import 'package:provider_api_flutter/models/dept_info_provider.dart';
 import 'package:provider_api_flutter/models/img_list.dart';
 import 'package:provider_api_flutter/models/img_list_provider.dart';
@@ -15,36 +16,42 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var info = Provider.of<Dept_Info_Provider>(context);
-    var info_img = Provider.of<Img_List_Provider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter Provider Api"),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: Dept_Search());
-              }),
-        ],
-      ),
-      body: FutureBuilder(
+    //var info_img = Provider.of<Img_List_Provider>(context);
+    return FutureBuilder(
         future: info.hitApi(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return Text(
-                  snapshot.data[index].deptName,
-                );
-              },
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Flutter Provider Api"),
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: !snapshot.hasData
+                        ? null
+                        : () {
+                            showSearch(
+                              context: context,
+                              delegate: Dept_Search(snapshot.data),
+                            );
+                          }),
+              ],
+            ),
+            body: Container(
+              child: snapshot.hasData
+                  ? ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          snapshot.data[index].deptName,
+                        );
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    ),
+            ),
+          );
+        });
   }
 }
 

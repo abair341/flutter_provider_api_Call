@@ -9,7 +9,6 @@ class Dept_Info_Provider extends ChangeNotifier {
 
   Dept_Info dept_info = Dept_Info();
 
-  //Dept_Info list;
   List<Dept_Info> list;
 
   Future<List<Dept_Info>> hitApi() async {
