@@ -53,6 +53,8 @@ class Dept_Search extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     var searchinfo = Provider.of<Dept_Info_Provider>(context);
 
+    print(list.toString());
+
     List<Dept_Info> dummyList = query.isEmpty
         ? list
         : list

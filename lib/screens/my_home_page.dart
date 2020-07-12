@@ -15,65 +15,84 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var info = Provider.of<Dept_Info_Provider>(context);
-    var cartInfo = Provider.of<Cartinfoprovider>(context);
-    //var info_img = Provider.of<Img_List_Provider>(context);
-    return FutureBuilder(
-        future: info.hitApi(),
-        builder: (context, AsyncSnapshot<List<Dept_Info>> snapshot) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Flutter Provider Api"),
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: !snapshot.hasData
-                        ? null
-                        : () {
-                            showSearch(
-                              context: context,
-                              delegate: Dept_Search(snapshot.data),
-                            );
-                          }),
-                IconButton(
-                  icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Cartscreen()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            body: Container(
-              child: snapshot.hasData
-                  ? ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: snapshot.data.length > 0
-                              ? cartInfo
-                                  .addToCart(snapshot.data[index].deptName)
-                              : () {},
-                          //info.addToCart(snapshot.data[index].deptName),
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                snapshot.data[index].deptName,
+    try {
+      var info = Provider.of<Dept_Info_Provider>(context);
+      var cartInfo = Provider.of<Cartinfoprovider>(context);
+      //var info_img = Provider.of<Img_List_Provider>(context);
+      return FutureBuilder(
+          future: info.hitApi(),
+          builder: (context, AsyncSnapshot<List<Dept_Info>> snapshot) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Flutter Provider Api"),
+                actions: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: !snapshot.hasData
+                          ? null
+                          : () {
+                              showSearch(
+                                context: context,
+                                delegate: Dept_Search(snapshot.data),
+                              );
+                            }),
+                  IconButton(
+                    icon: Icon(Icons.add_shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Cartscreen()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              body: Container(
+                child: snapshot.hasData
+                    ? ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            //info.addToCart(snapshot.data[index].deptName),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      snapshot.data[index].deptName,
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () => cartInfo.addCart(
+                                          snapshot.data[index]
+                                          // snapshot.data[index]['deptName'],
+                                          // snapshot.data[index].deptName,
+                                          ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(),
-                    ),
-            ),
-          );
-        });
+                          );
+                        },
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ),
+            );
+          });
+    } catch (e) {
+      return Container(
+          padding: EdgeInsets.all(18),
+          margin: EdgeInsets.all(18),
+          alignment: Alignment.center,
+          child: Text('Something went wrong at ${e.toString()}'));
+    }
   }
 }
 
