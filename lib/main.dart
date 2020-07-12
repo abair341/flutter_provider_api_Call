@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_api_flutter/models/cart_info_provider.dart';
 import 'package:provider_api_flutter/models/dept_info_provider.dart';
 import 'package:provider_api_flutter/models/img_list_provider.dart';
 import 'package:provider_api_flutter/screens/my_home_page.dart';
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<Img_List_Provider>(
           create: (_) => Img_List_Provider(),
+        ),
+        ChangeNotifierProvider<Cartinfoprovider>(
+          create: (_) => Cartinfoprovider(),
         ),
       ],
       child: MaterialApp(
