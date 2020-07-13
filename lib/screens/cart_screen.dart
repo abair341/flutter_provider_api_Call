@@ -11,19 +11,21 @@ class _CartscreenState extends State<Cartscreen> {
   @override
   Widget build(BuildContext context) {
     var infoo = Provider.of<Cartinfoprovider>(context);
-    print(infoo.clist.length);
-    print(infoo.clist.toString());
+    print(infoo.cartlist.length);
+    print(infoo.cartlist.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart Screen'),
       ),
-      body: infoo.clist.length > 0
+      body: infoo.cartlist.length > 0
           ? ListView.builder(
-              itemCount: infoo.clist.length,
+              itemCount: infoo.cartlist.length,
               itemBuilder: (context, index) {
-                return Text(
-                  //'ok'
-                  infoo.clist[index].deptName,
+                return Column(
+                  children: <Widget>[
+                    Text(infoo.cartlist.values.toList()[index].deptName),
+                    Text(infoo.cartlist.values.toList()[index].locName),
+                  ],
                 );
               },
             )

@@ -66,13 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       snapshot.data[index].deptName,
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.add),
-                                      onPressed: () => cartInfo.addCart(
-                                          snapshot.data[index]
-                                          // snapshot.data[index]['deptName'],
-                                          // snapshot.data[index].deptName,
-                                          ),
-                                    )
+                                        icon: Icon(Icons.add),
+                                        onPressed: () => cartInfo.addToCart(
+                                              snapshot.data[index].deptName,
+                                              snapshot.data[index].deptName,
+                                            ))
                                   ],
                                 ),
                               ),

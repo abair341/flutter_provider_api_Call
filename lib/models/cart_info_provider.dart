@@ -5,28 +5,18 @@ import 'package:provider_api_flutter/models/dept_info.dart';
 class Cartinfoprovider extends ChangeNotifier {
   Map<String, Cartinfo> cartlist = {};
 
-  List<Dept_Info> clist = [];
-
-  addCart(Dept_Info deptName) {
-    print(deptName);
-    clist.add(deptName);
-  }
-
   Map<String, Cartinfo> get items {
-    return {...items};
+    return {...cartlist};
   }
 
   int get itemcount {
-    return items.length;
+    return cartlist.length;
   }
 
-  addToCart(String deptName) {
-    // print(deptName);
+  addToCart(String deptName, String locName) {
     if (deptName != null) {
       cartlist.putIfAbsent(
-        deptName,
-        () => Cartinfo(deptName: deptName),
-      );
+          deptName, () => Cartinfo(deptName: deptName, locName: locName));
       notifyListeners();
     }
   }
